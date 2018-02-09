@@ -1,0 +1,41 @@
+<head>
+<title>Data Perhitungan</title>
+
+</head>
+<body>
+<center>
+	<h2>Rekapitulasi Hasil Perhitungan</h2>
+</center>
+<table border="1" align="center">
+	<caption><h4>Hasil Perhitungan ServQual keseluruhan Rawat Jalan</h4></caption>
+	<tbody>
+		<tr>
+			<th>Pernyataan Survei</th>
+			<th>Rata-rata Nilai Persepsi</th>
+			<th>Rata-rata Nilai Harapan</th>
+			<th>Nilai Service Quality</th>
+		</tr>
+		<?php foreach ($sub as $row) {
+			$i=0;
+			$persepsi = 0;
+			$harapan = 0;
+			foreach ($survei as $key) {
+			    if ($row->ID_SUB == $key->ID_SUB) {
+			      	$i++;
+			      	$persepsi = $persepsi + $key->NILAI_PERSEPSI;
+			      	$harapan = $harapan + $key->NILAI_HARAPAN;
+			    }
+			}
+			if ($i!=0) {
+				$rata_persepsi = $persepsi/$i;
+				$rata_harapan = $harapan/$i;
+				$servqual = $rata_persepsi - $rata_harapan;?>
+			<tr>
+				<td><?php echo $row->NAMA_SUB;?></td>
+				<td><?php echo number_format($servqual,2);?></td>
+				<td><?php echo number_format($rata_harapan,2);?></td>
+			</tr>
+		<?php }
+		}?>
+	</tbody>
+</table>
